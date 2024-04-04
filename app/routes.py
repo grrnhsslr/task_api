@@ -200,10 +200,10 @@ def delete_user(user_id):
 
 # Get a Single user By ID
 @app.route('/users/<int:user_id>')
-def get_task(task_id):
+def get_user(user_id):
     # Get the user from database by id
-    task = db.session.get(User, user_id)
-    if task:
+    user = db.session.get(User, user_id)
+    if user:
         return user.to_dict()
     else:
         # If we loop through all the users without returning, the task with that ID does not exist
