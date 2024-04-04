@@ -1,0 +1,12 @@
+# ignore venv
+venv2/
+
+# ignore pychace
+__pycache__/
+
+# ignore env file because it contains environment secrets
+.env
+
+*.db
+
+.vscode/
