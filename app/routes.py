@@ -197,3 +197,14 @@ def delete_user(user_id):
     # delete the user
     user.delete()
     return {"Success": f'{user.id} was successfully deleted'}, 200
+
+# Get a Single user By ID
+@app.route('/users/<int:user_id>')
+def get_task(task_id):
+    # Get the user from database by id
+    task = db.session.get(User, user_id)
+    if task:
+        return user.to_dict()
+    else:
+        # If we loop through all the users without returning, the task with that ID does not exist
+        return {'error': f"user with an ID of {user_id} does not exist"}, 404
