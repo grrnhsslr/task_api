@@ -4,7 +4,6 @@ from datetime import datetime, timezone, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
@@ -37,11 +36,11 @@ class User(db.Model):
 
     def to_dict(self):
         return {'id': self.id,
-    'firstname': self.first_name,
-    'lastName': self.last_name,
-    'username': self.username,
-    'dateCreated': self.date_created
-}
+                'firstname': self.first_name,
+                'lastName': self.last_name,
+                'username': self.username,
+                'dateCreated': self.date_created
+                }
     
     def get_token(self):
         now = datetime.now(timezone.utc)
@@ -65,16 +64,12 @@ class User(db.Model):
         db.session.commit()
 
             
-
-
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
     
-
-
     # in sql - user id INTEGER NOT NULL, foreign key (user_id) references user(id)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     author = db.relationship('User', back_populates='tasks')
@@ -108,18 +103,7 @@ class Task(db.Model):
         self.save()
 
     def delete(self):
-        db.session.delete(self) # deleting THIS obj from the db
-        db.session.commit() # commiting our changes
+        db.session.delete(self)  # deleting THIS obj from the db
+        db.session.commit()  # commiting our changes
 
-    def update(self, **kwargs):
-        allowed_fields = {'title', 'description'}
-
-        for key, value in kwargs.items():
-            if key in allowed_fields:
-                setattr(self, key, value)
-        self.save()
-
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
 
